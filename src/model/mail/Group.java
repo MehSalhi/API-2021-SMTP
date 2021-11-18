@@ -1,8 +1,10 @@
 package model.mail;
 
 public class Group {
-    public Group(Person ...victims){
+    Person[] victims;
 
+    public Group(Person ...victims){
+        this.victims = victims;
     }
 
 }
