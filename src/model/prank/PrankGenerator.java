@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 public class PrankGenerator {
@@ -13,9 +14,11 @@ public class PrankGenerator {
     private Prank prank;
 
     public PrankGenerator(Group victims){
+        //choisi un sender aléatoire parmi les victims
         int idSender = selectSender(victims.getVictims().length);
+        //boucle qui répartit les victims en sender ou receiver[]
         for(int i = 0, j = 0; i < victims.getVictims().length; ++i){
-            if(i== idSender){
+            if(i == idSender){
                 sender = victims.getVictims()[i];
             } else{
                 receiver[j] = victims.getVictims()[i];
@@ -25,7 +28,7 @@ public class PrankGenerator {
     }
 
     public Message generateMessage(){
-        Message message = new Message();
+        Message message = new Message(sender, prank.getSubject(), prank.getBody(), receiver);
         return message;
     }
 
@@ -35,7 +38,19 @@ public class PrankGenerator {
     }
 
     private void generatePrank(){
-        File file = new File("message.UTF8");
-       
+        BufferedReader reader;
+        StringBuilder sb = new StringBuilder();
+        try {
+            reader =new BufferedReader(new FileReader("message.UTF8", StandardCharsets.UTF_8));
+            //TODO: changer la condition du while pour ne lire qu'un prank
+            while(reader.ready()){
+                sb.append(reader.readLine());
+            }
+            //TODO: séparer entre le subject et le body
+            prank = new Prank(sb.toString(), sb.toString());
+
+        }catch(Exception e){
+            //TODO: catche exceptions
+        }
     }
 }
