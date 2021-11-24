@@ -4,9 +4,8 @@ public class Prank {
     private String subject;
     private String body;
 
-    public Prank(String subject, String body){
-        this.subject = subject;
-        this.body = body;
+    public Prank(String message){
+        separateBodySubject(message);
     }
 
     public String getSubject() {
@@ -15,5 +14,9 @@ public class Prank {
 
     public String getBody() {
         return body;
+    }
+
+    public void separateBodySubject(String message){
+        //TODO: séparer les message en un subject et un body
     }
 }

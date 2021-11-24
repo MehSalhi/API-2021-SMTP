@@ -28,6 +28,7 @@ public class PrankGenerator {
     }
 
     public Message generateMessage(){
+        generatePrank();
         Message message = new Message(sender, prank.getSubject(), prank.getBody(), receiver);
         return message;
     }
@@ -42,12 +43,13 @@ public class PrankGenerator {
         StringBuilder sb = new StringBuilder();
         try {
             reader =new BufferedReader(new FileReader("message.UTF8", StandardCharsets.UTF_8));
-            //TODO: changer la condition du while pour ne lire qu'un prank
+
             while(reader.ready()){
                 sb.append(reader.readLine());
             }
-            //TODO: séparer entre le subject et le body
-            prank = new Prank(sb.toString(), sb.toString());
+            //TODO: faire un substring ne contenant qu'un prank
+
+            prank = new Prank(sb.toString());
 
         }catch(Exception e){
             //TODO: catche exceptions
