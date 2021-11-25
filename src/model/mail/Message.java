@@ -4,13 +4,13 @@ public class Message {
     private String body;
     private String subject;
     private String sender;
-    private String receivers;
+    private String[] receivers;
 
     public Message(Person sender, String subject, String body, Person ... receivers) {
         this.body = body;
         this.subject = subject;
         this.sender = sender.getAdress();
-        this.receivers = personArrayToString(receivers);
+        this.receivers = personArrayToStringArray(receivers);
     }
 
     /**
@@ -20,25 +20,33 @@ public class Message {
      * @param stringArray
      * @return
      */
-    public String personArrayToString(Person ... stringArray) {
-        StringBuilder strB = new StringBuilder();
+    public String[] personArrayToStringArray(Person ... stringArray) {
+        String[] personStrArray = new String[stringArray.length];
         
         if(stringArray.length == 0) {
             throw new RuntimeException("Receivers list cannot be empty.");
         }
 
         for(int i = 0; i < stringArray.length; ++i) {
+            personStrArray[i] = stringArray[i].getAdress();
+        }
+
+        return personStrArray;
+    }
+
+    public String[] getReceivers() {
+        return receivers;
+    }
+
+    public String getReceiversToString() {
+        StringBuilder strB = new StringBuilder();
+        for(int i = 0; i < getReceivers().length; ++i) {
             if(i != 0) {
                 strB.append(", ");
             }
-            strB.append(stringArray[i].getAdress());
+            strB.append(getReceivers()[i]);
         }
-
         return strB.toString();
-    }
-
-    public String getReceivers() {
-        return receivers;
     }
 
     public String getBody() {
@@ -60,7 +68,12 @@ public class Message {
         strB.append("\n");
 
         strB.append("Receivers: ");
-        strB.append(getReceivers());
+        for(int i = 0; i < getReceivers().length; ++i) {
+            if(i != 0) {
+                strB.append(", ");
+            }
+            strB.append(getReceivers()[i]);
+        }
         strB.append("\n");
 
         strB.append("Subject: ");
