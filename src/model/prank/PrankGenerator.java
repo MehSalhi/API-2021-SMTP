@@ -13,9 +13,10 @@ public class PrankGenerator {
 
     public PrankGenerator(Group victims){
         this.group = victims;
+        generateMessage();
     }
 
-    public Message generateMessage(){
+    private Message generateMessage(){
         generatePrank();
         Message message = new Message(group.getSender(), prank.getSubject(), prank.getBody(), group.getReceivers());
         return message;
