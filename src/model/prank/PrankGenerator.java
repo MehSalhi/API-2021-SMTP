@@ -10,10 +10,15 @@ public class PrankGenerator {
     private Group group;
     private Prank prank;
     final String SEPARATOR = "<==========>";
+    private Message message;
 
     public PrankGenerator(Group victims){
         this.group = victims;
-        generateMessage();
+        message = generateMessage();
+    }
+
+    public Message getMessage() {
+        return message;
     }
 
     private Message generateMessage(){
