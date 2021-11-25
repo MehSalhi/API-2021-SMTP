@@ -1,14 +1,13 @@
 package model.mail;
-import java.io.*;
 
 public class Message {
-    private String text;
+    private String body;
     private String subject;
     private String sender;
     private String receivers;
 
-    public Message(Person sender, String subject, String text, Person ... receivers) {
-        this.text = text;
+    public Message(Person sender, String subject, String body, Person ... receivers) {
+        this.body = body;
         this.subject = subject;
         this.sender = sender.getAdress();
         this.receivers = personArrayToString(receivers);
@@ -16,12 +15,17 @@ public class Message {
 
     /**
      * Converts an array of string to a string
-     * Used to format the receiver list
+     * Used to format the receiver list from a list of argument to a String
+     * "email1, email2, emai3"
      * @param stringArray
      * @return
      */
-    String personArrayToString(Person ... stringArray) {
+    public String personArrayToString(Person ... stringArray) {
         StringBuilder strB = new StringBuilder();
+        
+        if(stringArray.length == 0) {
+            throw new RuntimeException("Receivers list cannot be empty.");
+        }
 
         for(int i = 0; i < stringArray.length; ++i) {
             if(i != 0) {
@@ -36,4 +40,39 @@ public class Message {
     public String getReceivers() {
         return receivers;
     }
+
+    public String getBody() {
+        return body;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public String toString() {
+        StringBuilder strB = new StringBuilder();
+        strB.append("Sender: ");
+        strB.append(getSender());
+        strB.append("\n");
+
+        strB.append("Receivers: ");
+        strB.append(getReceivers());
+        strB.append("\n");
+
+        strB.append("Subject: ");
+        strB.append(getSubject());
+        strB.append("\n");
+
+        strB.append("Body: \n");
+        strB.append(getBody());
+        strB.append("\n");
+
+        return strB.toString();
+    }
+
+
 }
