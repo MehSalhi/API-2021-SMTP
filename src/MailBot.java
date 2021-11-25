@@ -23,7 +23,6 @@ public class MailBot {
         peoplePerGroups = victims.length/nbGroups;
 
         //crée les groupes avec les personnes dedans
-        //TODO: NE FONCTIONNE PAS!!!!
         putPeopleInGroups(victims, groups, peoplePerGroups);
 
         //génére un message par groupe et l'envoi via le client smtp
@@ -33,9 +32,6 @@ public class MailBot {
         }
 
     }
-
-    //TODO: pas sur du tout de cette fonction... paraît très sale
-    //TODO: ne foncionne pas
 
     /**
      * Cette fonction crée un groupe composé du nombre voulu de personnes,
@@ -47,20 +43,22 @@ public class MailBot {
      *                                      de plus de personnes si nécessaire
      */
     private static void putPeopleInGroups(Person[] people, Group[] groups, int peoplePerGroups){
-        int cnt = 0;
-        Person[] sameGroup = new Person[1]; //TODO: ça pique les yeux....
-        for(Person p : people){
-            if(cnt == 0 || cnt%peoplePerGroups == 0){
-                if(cnt == people.length-1){
-                    sameGroup[peoplePerGroups] = p;
-
-                }else {
-                    sameGroup = new Person[peoplePerGroups];
-                    sameGroup[cnt%peoplePerGroups] = p;
-                }
+        int cnt = 0, nbInGroup, groupNumber = 0;
+        Person[] sameGroup;
+        while(cnt < people.length) {
+            if((nbInGroup = people.length-cnt-peoplePerGroups) < 3){
+                sameGroup = new Person[peoplePerGroups + nbInGroup];
+            }else if( nbInGroup <= peoplePerGroups){
+                sameGroup = new Person[nbInGroup];
             }else{
-                sameGroup[cnt%peoplePerGroups] = p;
+                sameGroup = new Person[peoplePerGroups];
             }
+
+            for (int i = 0; i < sameGroup.length; ++i) {
+                sameGroup[i] = people[cnt++];
+            }
+
+            groups[groupNumber++] = new Group(sameGroup);
         }
     }
 
