@@ -50,7 +50,7 @@ public class ApplicationTest {
         assertEquals(expectedBody, m.getBody());
         assertEquals(expectedSubject, m.getSubject());
         assertEquals(expectedSender, m.getSender());
-        assertEquals(expectedReceivers, m.getReceivers());
+        assertEquals(expectedReceivers, m.getReceiversToString());
 
     }
 

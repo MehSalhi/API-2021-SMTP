@@ -29,6 +29,7 @@ public class MailBot {
         for(Group g : groups){
             Message message = new PrankGenerator(g).getMessage();
             smtp.sendMail(message);
+
         }
 
     }
