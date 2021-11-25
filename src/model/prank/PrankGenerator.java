@@ -2,57 +2,71 @@ package model.prank;
 import model.mail.*;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 public class PrankGenerator {
-    private Person[] receiver;
-    private Person sender;
+    private Group group;
     private Prank prank;
+    final String SEPARATOR = "<==========>";
 
     public PrankGenerator(Group victims){
-        //choisi un sender aléatoire parmi les victims
-        int idSender = selectSender(victims.getVictims().length);
-        //boucle qui répartit les victims en sender ou receiver[]
-        for(int i = 0, j = 0; i < victims.getVictims().length; ++i){
-            if(i == idSender){
-                sender = victims.getVictims()[i];
-            } else{
-                receiver[j] = victims.getVictims()[i];
-                ++j;
-            }
-        }
+        this.group = victims;
     }
 
     public Message generateMessage(){
         generatePrank();
-        Message message = new Message(sender, prank.getSubject(), prank.getBody(), receiver);
+        Message message = new Message(group.getSender(), prank.getSubject(), prank.getBody(), group.getReceivers());
         return message;
     }
 
-    private int selectSender(int size){
+    private int selectRandom(int size){
         Random rand = new Random();
         return rand.nextInt(size);
     }
 
     private void generatePrank(){
         BufferedReader reader;
-        StringBuilder sb = new StringBuilder();
+        int nbPrank = 0;
         try {
             reader =new BufferedReader(new FileReader("message.UTF8", StandardCharsets.UTF_8));
 
             while(reader.ready()){
-                sb.append(reader.readLine());
+                if(reader.readLine() == SEPARATOR){
+                    ++nbPrank;
+                }
             }
-            //TODO: faire un substring ne contenant qu'un prank
+            reader.reset();
 
-            prank = new Prank(sb.toString());
+            prank = new Prank(selectOnePrank(reader, selectRandom(nbPrank)));
 
         }catch(Exception e){
             //TODO: catche exceptions
         }
+    }
+
+    private String selectOnePrank(BufferedReader reader, int numPrank){
+        StringBuilder sb = new StringBuilder();
+        String tmp;
+        int nbPrank = 0;
+        try{
+            while(reader.ready()){
+                tmp = reader.readLine();
+                if(tmp == SEPARATOR){
+                    ++nbPrank;
+                }
+                if(nbPrank == numPrank){
+                    sb.append(tmp);
+                }
+                if(nbPrank > numPrank){
+                    break;
+                }
+            }
+        }catch(Exception e){
+            //TODO: catch exception
+        }
+
+        return sb.toString();
     }
 }
