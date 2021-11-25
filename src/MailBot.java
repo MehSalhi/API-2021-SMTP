@@ -28,7 +28,7 @@ public class MailBot {
         //génére un message par groupe et l'envoi via le client smtp
         for(Group g : groups){
             Message message = new PrankGenerator(g).getMessage();
-            //SmtpClient smtp = new SmtpClient(message);
+            SmtpClient smtp = new SmtpClient(message);
         }
 
     }
