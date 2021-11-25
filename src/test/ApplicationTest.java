@@ -1,5 +1,6 @@
 package test;
 import model.mail.*;
+import model.prank.*;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -132,5 +133,45 @@ public class ApplicationTest {
         Group g = new Group(p1, p2, p3);
         assertNotNull(g.getSender());
         assertTrue(g.getReceivers().length == 2);
+    }
+
+    /*************************************************************
+     *  PrankGenerator
+     *************************************************************/
+
+    @Test
+    public void prankSubjectShouldBeCorrect(){
+        Prank prank = new Prank("mon Subject de Test\nmon body de Test\nrépartit sur plusieurs\nlignes");
+        String expectedSubject = "mon Subject de Test";
+        assertEquals(expectedSubject, prank.getSubject());
+    }
+
+    @Test
+    public void prankBodyShouldBeCorrect(){
+        Prank prank = new Prank("mon Subject de Test\nmon body de Test\nrépartit sur plusieurs\nlignes");
+        String expectedBody = "mon body de Test\nrépartit sur plusieurs\nlignes";
+        assertEquals(expectedBody, prank.getBody());
+    }
+    /*************************************************************
+     *  PrankGenerator
+     *************************************************************/
+
+    @Test
+    public void prankShouldBeCorrect(){
+        Person p1 = new Person("tata@tata.ch");
+        Person p2 = new Person("titi@tata.ch");
+        Person p3 = new Person("toto@toto.ch");
+
+        Group g = new Group(p1, p2, p3);
+        PrankGenerator generator = new PrankGenerator(g, true);
+        generator.generatePrank();
+
+        String expectedSubject = "mon Subject de Test";
+        String expectedBody = "mon body de Test\nrépartit sur plusieurs\nlignes";
+        Prank prank = generator.getPrank();
+        String resultSubject = prank.getSubject();
+
+        assertEquals(expectedSubject, resultSubject);
+        assertEquals(expectedBody, generator.getPrank().getBody());
     }
 }
