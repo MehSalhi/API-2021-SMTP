@@ -10,6 +10,7 @@ public class Group {
        if (victims.length < 3) {
            throw new RuntimeException("A group should at least contain 3 people.");
        }
+       receivers = new Person[victims.length - 1];
         //choisi un sender aléatoire parmi les victims
         int idSender = selectSender(victims.length);
         //boucle qui répartit les victims en sender ou receiver[]

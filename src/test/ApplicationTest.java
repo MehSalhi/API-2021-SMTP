@@ -117,7 +117,10 @@ public class ApplicationTest {
 
     @Test (expected = RuntimeException.class)
     public void groupSmallerThan3ShouldThrowRuntimeException() {
+        Person p1 = new Person("tata@tata.ch");
+        Person p2 = new Person("titi@tata.ch");
 
+        Group g = new Group(p1, p2);
     }
 
     @Test
