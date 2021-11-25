@@ -31,7 +31,7 @@ public class PrankGenerator {
         BufferedReader reader;
         int nbPrank = 0;
         try {
-            reader =new BufferedReader(new FileReader("message.UTF8", StandardCharsets.UTF_8));
+            reader =new BufferedReader(new FileReader("../../config/message.UTF8", StandardCharsets.UTF_8));
 
             while(reader.ready()){
                 if(reader.readLine() == SEPARATOR){
@@ -42,9 +42,11 @@ public class PrankGenerator {
 
             prank = new Prank(selectOnePrank(reader, selectRandom(nbPrank)));
 
+            reader.close();
         }catch(Exception e){
             //TODO: catche exceptions
         }
+
     }
 
     private String selectOnePrank(BufferedReader reader, int numPrank){
