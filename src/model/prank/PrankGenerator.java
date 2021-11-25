@@ -2,6 +2,7 @@ package model.prank;
 import model.mail.*;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
@@ -11,10 +12,28 @@ public class PrankGenerator {
     private Prank prank;
     final String SEPARATOR = "<==========>";
     private Message message;
+    private boolean test;
+
+    /**
+     * This constructor is used only for test purposes and allows to
+     * launch each functions separately
+     * @param victims
+     * @param test
+     */
+    public PrankGenerator(Group victims, boolean test){
+        this.group = victims;
+        this.test = test;
+    }
 
     public PrankGenerator(Group victims){
         this.group = victims;
         message = generateMessage();
+        this.test = false;
+    }
+
+
+    public Prank getPrank() {
+        return prank;
     }
 
     public Message getMessage() {
@@ -32,11 +51,22 @@ public class PrankGenerator {
         return rand.nextInt(size);
     }
 
-    private void generatePrank(){
+    public void generatePrank(){
+        File file;
+        FileReader fr;
         BufferedReader reader;
         int nbPrank = 0;
         try {
-            reader =new BufferedReader(new FileReader("../../config/message.UTF8", StandardCharsets.UTF_8));
+            if(test){
+                //Si on effectue un test
+                file = new File("message.UTF8");
+            }else{
+                file = new File("../../config/message.UTF8");
+            }
+
+            fr = new FileReader(file, StandardCharsets.UTF_8);
+            System.out.println("tatata");
+            reader =new BufferedReader(fr);
 
             while(reader.ready()){
                 if(reader.readLine() == SEPARATOR){
@@ -45,11 +75,18 @@ public class PrankGenerator {
             }
             reader.reset();
 
-            prank = new Prank(selectOnePrank(reader, selectRandom(nbPrank)));
+            if(test){
+                //séléctionne un prank fix si il s'agit d'un test
+                prank = new Prank(selectOnePrank(reader, 2));
+            }else{
+                prank = new Prank(selectOnePrank(reader, selectRandom(nbPrank)));
+            }
+
+
 
             reader.close();
         }catch(Exception e){
-            //TODO: catche exceptions
+            //TODO: catch exceptions
         }
 
     }
