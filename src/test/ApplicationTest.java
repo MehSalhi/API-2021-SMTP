@@ -110,4 +110,24 @@ public class ApplicationTest {
         assertEquals(expected, m.toString());
 
     }
+
+    /*************************************************************
+     *  Groups
+     *************************************************************/
+
+    @Test (expected = RuntimeException.class)
+    public void groupSmallerThan3ShouldThrowRuntimeException() {
+
+    }
+
+    @Test
+    public void groupShouldHaveOneSenderAndNReceivers() {
+        Person p1 = new Person("tata@tata.ch");
+        Person p2 = new Person("titi@tata.ch");
+        Person p3 = new Person("toto@toto.ch");
+
+        Group g = new Group(p1, p2, p3);
+        assertNotNull(g.getSender());
+        assertTrue(g.getReceivers().length == 2);
+    }
 }
