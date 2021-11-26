@@ -57,31 +57,33 @@ public class PrankGenerator {
         BufferedReader reader;
         int nbPrank = 0;
         try {
+            //TODO: chemin relatif
             if(test){
                 //Si on effectue un test
-                file = new File("message.UTF8");
+                file = new File("/home/guilain/Documents/HEIG/Cours/API/Labo4/API-2021-SMTP/src/test/message.UTF8");
             }else{
                 file = new File("../../config/message.UTF8");
             }
 
             fr = new FileReader(file, StandardCharsets.UTF_8);
-            System.out.println("tatata");
-            reader =new BufferedReader(fr);
+            reader = new BufferedReader(fr);
+            reader.mark(1024);
 
             while(reader.ready()){
                 if(reader.readLine() == SEPARATOR){
                     ++nbPrank;
                 }
             }
+
             reader.reset();
 
             if(test){
                 //séléctionne un prank fix si il s'agit d'un test
+
                 prank = new Prank(selectOnePrank(reader, 2));
             }else{
                 prank = new Prank(selectOnePrank(reader, selectRandom(nbPrank)));
             }
-
 
 
             reader.close();
@@ -94,18 +96,18 @@ public class PrankGenerator {
     private String selectOnePrank(BufferedReader reader, int numPrank){
         StringBuilder sb = new StringBuilder();
         String tmp;
-        int nbPrank = 0;
+        int nbPrank = 1;
         try{
+
             while(reader.ready()){
                 tmp = reader.readLine();
-                if(tmp == SEPARATOR){
+                if(SEPARATOR.equals(tmp)){
                     ++nbPrank;
-                }
-                if(nbPrank == numPrank){
+                }else if(nbPrank == numPrank){
                     sb.append(tmp);
-                }
-                if(nbPrank > numPrank){
-                    break;
+                    sb.append("\n");
+                }else if(nbPrank > numPrank){
+                    return sb.toString();
                 }
             }
         }catch(Exception e){

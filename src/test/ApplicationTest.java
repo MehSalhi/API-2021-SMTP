@@ -157,7 +157,7 @@ public class ApplicationTest {
      *************************************************************/
 
     @Test
-    public void prankShouldBeCorrect(){
+    public void prankShouldGenerateCorrectly(){
         Person p1 = new Person("tata@tata.ch");
         Person p2 = new Person("titi@tata.ch");
         Person p3 = new Person("toto@toto.ch");
@@ -167,11 +167,12 @@ public class ApplicationTest {
         generator.generatePrank();
 
         String expectedSubject = "mon Subject de Test";
-        String expectedBody = "mon body de Test\nrépartit sur plusieurs\nlignes";
+        String expectedBody = "mon body de Test\nrépartit sur plusieurs\nlignes\n";
         Prank prank = generator.getPrank();
         String resultSubject = prank.getSubject();
 
         assertEquals(expectedSubject, resultSubject);
         assertEquals(expectedBody, generator.getPrank().getBody());
     }
+
 }
