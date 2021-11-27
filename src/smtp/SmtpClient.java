@@ -19,86 +19,93 @@ public class SmtpClient {
     String clientMsg = "";
     int newBytes;
 
+    boolean messageOK;
     public SmtpClient(String host, int port) {
         this.host = host;
         this.port = port;
     }
 
-    public void sendMail(Message m) {
+    /**
+     * Sends the message using the smtp client
+     * @param m the message
+     * @return True if the message was sent correctly
+     */
+    public boolean sendMail(Message m) {
         Socket clientSocket;
         try {
+            // TODO handle errors and verify that server answers are OK
             // Establishes the connexion with the SMTP server
             clientSocket = new Socket(host, port);
-            System.out.println("DEBUG: connected");
+            //System.out.println("DEBUG: connected");
 
             os = new PrintWriter(clientSocket.getOutputStream());
             is = clientSocket.getInputStream();
 
             // Reads the server's welcome message and extract it's name
-            System.out.println("Receiving:");
+            //System.out.println("Receiving:");
             newBytes = is.read(buffer);
             inBuffer.write(buffer, 0, newBytes);
-            System.out.println(inBuffer);
+            //System.out.println(inBuffer);
 
             clientMsg = "EHLO " + inBuffer.toString().split(" ")[1] + "\r";
-            System.out.println("Sending: " + clientMsg);
+            //System.out.println("Sending: " + clientMsg);
             os.println(clientMsg);
             os.flush();
 
             // Reads the server's available options
-            System.out.println("Receiving:");
+            //System.out.println("Receiving:");
             inBuffer.reset();
             newBytes = is.read(buffer);
             inBuffer.write(buffer, 0, newBytes);
-            System.out.println(inBuffer);
+            //System.out.println(inBuffer);
 
             // starts sending the email
 
             clientMsg = "MAIL FROM:<" + m.getSender() + ">" + "\r";
-            System.out.println("Sending: " + clientMsg);
+            //System.out.println("Sending: " + clientMsg);
             os.println(clientMsg);
             os.flush();
 
-            System.out.println("Receiving:");
+            //System.out.println("Receiving:");
             inBuffer.reset();
             newBytes = is.read(buffer);
             inBuffer.write(buffer, 0, newBytes);
-            System.out.println(inBuffer);
+            //System.out.println(inBuffer);
 
             // send each recipient
             for(String rec : m.getReceivers()) {
                 clientMsg = "RCPT TO:<" + rec + ">" + "\r";
-                System.out.println("Sending: " + clientMsg);
+                //System.out.println("Sending: " + clientMsg);
                 os.println(clientMsg);
                 os.flush();
 
-                System.out.println("Receiving:");
+                //System.out.println("Receiving:");
                 inBuffer.reset();
                 newBytes = is.read(buffer);
                 inBuffer.write(buffer, 0, newBytes);
-                System.out.println(inBuffer);
+                //System.out.println(inBuffer);
             }
 
             // sends DATA
             clientMsg = "DATA" + "\r";
-            System.out.println("Sending: " + clientMsg);
+            //System.out.println("Sending: " + clientMsg);
             os.println(clientMsg);
             os.flush();
 
             // attend: 354 Start mail input; end with <CRLF>.<CRLF>
-            System.out.println("Receiving:");
+            //System.out.println("Receiving:");
             inBuffer.reset();
             newBytes = is.read(buffer);
             inBuffer.write(buffer, 0, newBytes);
-            System.out.println(inBuffer);
+            //System.out.println(inBuffer);
 
             clientMsg = "From: " + m.getSender();
-            System.out.println(clientMsg);
+            //System.out.println(clientMsg);
             os.println(clientMsg);
             os.flush();
 
             clientMsg = "Subject: " + m.getSubject();
-            System.out.println(clientMsg);
+            //System.out.println(clientMsg);
             os.println(clientMsg);
             os.flush();
 
@@ -106,7 +113,7 @@ public class SmtpClient {
             os.flush();
 
             clientMsg = m.getBody() + "\r";
-            System.out.println(clientMsg);
+            //System.out.println(clientMsg);
             os.println(clientMsg);
             os.flush();
 
@@ -115,26 +122,29 @@ public class SmtpClient {
             os.flush();
 
             // attend confirmation
-            System.out.println("Receiving:");
+            //System.out.println("Receiving:");
             inBuffer.reset();
             newBytes = is.read(buffer);
             inBuffer.write(buffer, 0, newBytes);
-            System.out.println(inBuffer);
+            //System.out.println(inBuffer);
 
             // termine avec CRLF . CRLF
             // attend "250 OK"
             // envoie QUIT
-            clientMsg = "quit + \r";
-            System.out.println(clientMsg);
+            clientMsg = "quit \r";
+            //System.out.println(clientMsg);
             os.println(clientMsg);
             os.flush();
 
             // Attend "221"
-            System.out.println("Receiving:");
+            //System.out.println("Receiving:");
             inBuffer.reset();
             newBytes = is.read(buffer);
             inBuffer.write(buffer, 0, newBytes);
-            System.out.println(inBuffer);
+
+            messageOK = inBuffer.toString().startsWith("221");
+            //System.out.println(inBuffer);
+
 
         } catch (Exception e) {
 
@@ -148,6 +158,6 @@ public class SmtpClient {
             }
 
         }
-
+        return messageOK;
     }
 }

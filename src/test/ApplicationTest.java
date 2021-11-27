@@ -187,8 +187,6 @@ public class ApplicationTest {
         Message m = new Message(s, "test subject", "body content", p1, p2);
 
         SmtpClient client = new SmtpClient("localhost", 25000);
-        client.sendMail(m);
-
+        assertTrue(client.sendMail(m));
     }
-
 }
