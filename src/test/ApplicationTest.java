@@ -2,6 +2,7 @@ package test;
 import model.mail.*;
 import model.prank.*;
 import org.junit.Test;
+import smtp.SmtpClient;
 
 import static org.junit.Assert.*;
 
@@ -173,6 +174,21 @@ public class ApplicationTest {
 
         assertEquals(expectedSubject, resultSubject);
         assertEquals(expectedBody, generator.getPrank().getBody());
+    }
+
+    /*************************************************************
+     *  SMTP Client
+     *************************************************************/
+    @Test
+    public void smtpClientShouldWork() {Person s = new Person("toto@toto.ch");
+        Person p1 = new Person("tata@tata.ch");
+        Person p2 = new Person("titi@tata.ch");
+
+        Message m = new Message(s, "test subject", "body content", p1, p2);
+
+        SmtpClient client = new SmtpClient("localhost", 25000);
+        client.sendMail(m);
+
     }
 
 }

@@ -15,6 +15,8 @@ public class MailBot {
         //récupère le nombre de groupes
         int nbGroups = retrieveNbGroup();
         int peoplePerGroups;
+        String host = "localhost";
+        int port = 25000;
         //vérifie que le nombre de groupe n'est pas trop élevé
         if(victims.length < nbGroups){
             throw new RuntimeException("pas assez de victims pour autant de groupes");
@@ -24,7 +26,7 @@ public class MailBot {
 
         //crée les groupes avec les personnes dedans
         putPeopleInGroups(victims, groups, peoplePerGroups);
-        SmtpClient smtp = new SmtpClient();
+        SmtpClient smtp = new SmtpClient(host, port);
         //génére un message par groupe et l'envoi via le client smtp
         for(Group g : groups){
             Message message = new PrankGenerator(g).getMessage();
