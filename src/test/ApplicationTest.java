@@ -30,7 +30,7 @@ public class ApplicationTest {
                 , p4);
         String expected = "tata@tata.ch, titi@tata.ch, tutu@tata.ch, " +
                 "tete@tata.ch";
-        assertEquals(expected, m.getReceivers());
+        assertEquals(expected, m.getReceiversToString());
 
     }
 
