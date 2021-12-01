@@ -153,9 +153,6 @@ public class ApplicationTest {
         String expectedBody = "mon body de Test\nrépartit sur plusieurs\nlignes";
         assertEquals(expectedBody, prank.getBody());
     }
-    /*************************************************************
-     *  PrankGenerator
-     *************************************************************/
 
     @Test
     public void prankShouldGenerateCorrectly(){
@@ -174,6 +171,24 @@ public class ApplicationTest {
 
         assertEquals(expectedSubject, resultSubject);
         assertEquals(expectedBody, generator.getPrank().getBody());
+    }
+
+    @Test
+    public void messageShouldBeCorrect() {
+        Person p1 = new Person("toto@toto.ch");
+        Person p2 = new Person("tata@tata.ch");
+        Person p3 = new Person("titi@tata.ch");
+
+        Group g = new Group(p1, p2, p3);
+        PrankGenerator generator = new PrankGenerator(g, true);
+
+        Message actual = generator.generateMessage();
+        Message expected = new Message(g.getSender(), "mon Subject de Test", "mon body de Test\n" +
+                "répartit sur plusieurs\n" +
+                "lignes\n", g.getReceivers());
+
+        assertEquals(expected.toString(), actual.toString());
+
     }
 
     /*************************************************************

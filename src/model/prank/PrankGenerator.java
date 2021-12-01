@@ -40,7 +40,7 @@ public class PrankGenerator {
         return message;
     }
 
-    private Message generateMessage(){
+    public Message generateMessage(){
         generatePrank();
         Message message = new Message(group.getSender(), prank.getSubject(), prank.getBody(), group.getReceivers());
         return message;
