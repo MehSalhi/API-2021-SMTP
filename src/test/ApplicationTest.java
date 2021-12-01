@@ -194,6 +194,9 @@ public class ApplicationTest {
     /*************************************************************
      *  SMTP Client
      *************************************************************/
+    /**
+     * Tests that correctly formatted mail can be sent
+     */
     @Test
     public void smtpClientShouldWork() {Person s = new Person("toto@toto.ch");
         Person p1 = new Person("tata@tata.ch");
@@ -204,4 +207,5 @@ public class ApplicationTest {
         SmtpClient client = new SmtpClient("localhost", 25000);
         assertTrue(client.sendMail(m));
     }
+
 }

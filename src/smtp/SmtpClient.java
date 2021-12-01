@@ -48,7 +48,6 @@ public class SmtpClient {
     public boolean sendMail(Message m) {
         Socket clientSocket;
         try {
-            // TODO handle errors and verify that server answers are OK
             // Establishes the connexion with the SMTP server
             clientSocket = new Socket(host, port);
             //System.out.println("DEBUG: connected");
