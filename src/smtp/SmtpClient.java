@@ -5,6 +5,10 @@ import model.mail.Message;
 import java.io.*;
 import java.net.Socket;
 
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
+
 public class SmtpClient {
     private
 
@@ -20,13 +24,24 @@ public class SmtpClient {
     int newBytes;
 
     boolean messageOK;
+    private final static Logger LOGGER = Logger.getLogger(SmtpClient.class.getName());
+
     public SmtpClient(String host, int port) {
         this.host = host;
         this.port = port;
+        LOGGER.setLevel(Level.SEVERE);
+    }
+
+    private void throwExceptionIfAnswerIsNot(String expected) {
+        if (!inBuffer.toString().startsWith(expected)) {
+            throw new RuntimeException("Error while communicating with " +
+                    "the server");
+        }
     }
 
     /**
      * Sends the message using the smtp client
+     *
      * @param m the message
      * @return True if the message was sent correctly
      */
@@ -37,18 +52,21 @@ public class SmtpClient {
             // Establishes the connexion with the SMTP server
             clientSocket = new Socket(host, port);
             //System.out.println("DEBUG: connected");
-
+            // initializes the in/out streams
             os = new PrintWriter(clientSocket.getOutputStream());
             is = clientSocket.getInputStream();
 
-            // Reads the server's welcome message and extract it's name
+            // Reads the server's welcome message and extract its name
             //System.out.println("Receiving:");
             newBytes = is.read(buffer);
             inBuffer.write(buffer, 0, newBytes);
+            throwExceptionIfAnswerIsNot("220");
             //System.out.println(inBuffer);
+            LOGGER.log(Level.INFO, inBuffer.toString());
 
             clientMsg = "EHLO " + inBuffer.toString().split(" ")[1] + "\r";
             //System.out.println("Sending: " + clientMsg);
+            LOGGER.log(Level.INFO, "Sending: " + clientMsg);
             os.println(clientMsg);
             os.flush();
 
@@ -57,12 +75,15 @@ public class SmtpClient {
             inBuffer.reset();
             newBytes = is.read(buffer);
             inBuffer.write(buffer, 0, newBytes);
+            throwExceptionIfAnswerIsNot("250");
             //System.out.println(inBuffer);
+            LOGGER.log(Level.INFO, "Receiving: " + inBuffer);
 
             // starts sending the email
 
             clientMsg = "MAIL FROM:<" + m.getSender() + ">" + "\r";
             //System.out.println("Sending: " + clientMsg);
+            LOGGER.log(Level.INFO, "Sending: " + clientMsg);
             os.println(clientMsg);
             os.flush();
 
@@ -70,12 +91,15 @@ public class SmtpClient {
             inBuffer.reset();
             newBytes = is.read(buffer);
             inBuffer.write(buffer, 0, newBytes);
+            throwExceptionIfAnswerIsNot("250");
+            LOGGER.log(Level.INFO, "Receiving: " + inBuffer);
             //System.out.println(inBuffer);
 
             // send each recipient
-            for(String rec : m.getReceivers()) {
+            for (String rec : m.getReceivers()) {
                 clientMsg = "RCPT TO:<" + rec + ">" + "\r";
                 //System.out.println("Sending: " + clientMsg);
+                LOGGER.log(Level.INFO, "Sending: " + clientMsg);
                 os.println(clientMsg);
                 os.flush();
 
@@ -83,12 +107,15 @@ public class SmtpClient {
                 inBuffer.reset();
                 newBytes = is.read(buffer);
                 inBuffer.write(buffer, 0, newBytes);
+                throwExceptionIfAnswerIsNot("250");
+                LOGGER.log(Level.INFO, "Receiving: " + inBuffer);
                 //System.out.println(inBuffer);
             }
 
             // sends DATA
             clientMsg = "DATA" + "\r";
             //System.out.println("Sending: " + clientMsg);
+            LOGGER.log(Level.INFO, "Sending: " + clientMsg);
             os.println(clientMsg);
             os.flush();
 
@@ -97,15 +124,19 @@ public class SmtpClient {
             inBuffer.reset();
             newBytes = is.read(buffer);
             inBuffer.write(buffer, 0, newBytes);
+            throwExceptionIfAnswerIsNot("354");
+            LOGGER.log(Level.INFO, "Receiving: " + inBuffer);
             //System.out.println(inBuffer);
 
             clientMsg = "From: " + m.getSender();
             //System.out.println(clientMsg);
+            LOGGER.log(Level.INFO, "Sending: " + clientMsg);
             os.println(clientMsg);
             os.flush();
 
             clientMsg = "Subject: " + m.getSubject();
             //System.out.println(clientMsg);
+            LOGGER.log(Level.INFO, "Sending: " + clientMsg);
             os.println(clientMsg);
             os.flush();
 
@@ -114,10 +145,12 @@ public class SmtpClient {
 
             clientMsg = m.getBody() + "\r";
             //System.out.println(clientMsg);
+            LOGGER.log(Level.INFO, "Sending: " + clientMsg);
             os.println(clientMsg);
             os.flush();
 
             clientMsg = ".\r";
+            LOGGER.log(Level.INFO, "Sending: " + clientMsg);
             os.println(clientMsg);
             os.flush();
 
@@ -126,6 +159,8 @@ public class SmtpClient {
             inBuffer.reset();
             newBytes = is.read(buffer);
             inBuffer.write(buffer, 0, newBytes);
+            throwExceptionIfAnswerIsNot("250");
+            LOGGER.log(Level.INFO, "Receiving: " + inBuffer);
             //System.out.println(inBuffer);
 
             // termine avec CRLF . CRLF
@@ -141,8 +176,11 @@ public class SmtpClient {
             inBuffer.reset();
             newBytes = is.read(buffer);
             inBuffer.write(buffer, 0, newBytes);
+            //System.out.println(inBuffer);
 
             messageOK = inBuffer.toString().startsWith("221");
+            throwExceptionIfAnswerIsNot("221");
+            LOGGER.log(Level.INFO, "Receiving: " + inBuffer);
             //System.out.println(inBuffer);
 
 
@@ -152,8 +190,7 @@ public class SmtpClient {
             //os.close();
             try {
                 is.close();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
 
             }
 
