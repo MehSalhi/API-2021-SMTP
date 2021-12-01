@@ -2,7 +2,8 @@ package test;
 import model.mail.*;
 import model.prank.*;
 import org.junit.Test;
-import smtp.SmtpClient;
+import smtp.*;
+import util.Util;
 
 import static org.junit.Assert.*;
 
@@ -192,13 +193,23 @@ public class ApplicationTest {
     }
 
     /*************************************************************
+     *  Util
+     *************************************************************/
+    @Test
+    public void nbGroupShouldBeCorrect(){
+        assertEquals(8, Util.retrieveNbGroup());
+    }
+
+
+    /*************************************************************
      *  SMTP Client
      *************************************************************/
     /**
      * Tests that correctly formatted mail can be sent
      */
     @Test
-    public void smtpClientShouldWork() {Person s = new Person("toto@toto.ch");
+    public void smtpClientShouldWork() {
+        Person s = new Person("toto@toto.ch");
         Person p1 = new Person("tata@tata.ch");
         Person p2 = new Person("titi@tata.ch");
 
