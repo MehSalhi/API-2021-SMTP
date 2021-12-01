@@ -17,7 +17,6 @@ public class Prank {
     }
 
     public void separateBodySubject(String message){
-        //TODO: séparer les message en un subject et un body
         subject = message.substring(0,message.indexOf("\n"));
         body = message.substring(message.indexOf("\n")+1);
     }

@@ -5,6 +5,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Random;
 
 public class PrankGenerator {
@@ -59,10 +61,14 @@ public class PrankGenerator {
         try {
             //TODO: chemin relatif
             if(test){
+                //permet de visualiser le chemin absolu du répertoir courrant pour le debug
+                Path currentRelativePath = Paths.get("");
+                String s = currentRelativePath.toAbsolutePath().toString();
+                System.out.println("Current absolute path is: " + s);
                 //Si on effectue un test
-                file = new File("/home/guilain/Documents/HEIG/Cours/API/Labo4/API-2021-SMTP/src/test/message.UTF8");
+                file = new File("./src/test/message.UTF8");
             }else{
-                file = new File("../../config/message.UTF8");
+                file = new File("./src/config/message.UTF8");
             }
 
             fr = new FileReader(file, StandardCharsets.UTF_8);
