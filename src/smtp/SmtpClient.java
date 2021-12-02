@@ -6,24 +6,22 @@ import java.io.*;
 import java.net.Socket;
 
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 public class SmtpClient {
-    private
 
-    final String host;
-    int port;
-    PrintWriter os = null;
-    InputStream is = null;
-    final int BUFFER_SIZE = 1024;
-    byte[] buffer = new byte[BUFFER_SIZE];
-    ByteArrayOutputStream inBuffer = new ByteArrayOutputStream();
+    private final String host;
+    private int port;
+    private PrintWriter os = null;
+    private InputStream is = null;
+    private final int BUFFER_SIZE = 1024;
+    private byte[] buffer = new byte[BUFFER_SIZE];
+    private ByteArrayOutputStream inBuffer = new ByteArrayOutputStream();
 
-    String clientMsg = "";
-    int newBytes;
+    private String clientMsg = "";
+    private int newBytes;
 
-    boolean messageOK;
+    private boolean messageOK;
     private final static Logger LOGGER = Logger.getLogger(SmtpClient.class.getName());
 
     public SmtpClient(String host, int port) {
