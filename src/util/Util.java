@@ -66,8 +66,10 @@ public class Util {
         try{
             reader =new BufferedReader(
                     new FileReader("./src/config/victims.UTF8", StandardCharsets.UTF_8));
+            reader.mark(1024);
             //compte le nombre de personnes
             while(reader.ready()){
+                reader.readLine();
                 ++cnt;
             }
             reader.reset();
@@ -76,6 +78,7 @@ public class Util {
             //Entre chaque personne dans le tableau de personnes
             while(reader.ready()){
                 victims[cnt] = new Person(reader.readLine());
+                ++cnt;
             }
 
             reader.close();

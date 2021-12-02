@@ -200,6 +200,22 @@ public class ApplicationTest {
         assertEquals(8, Util.retrieveNbGroup());
     }
 
+    @Test
+    public void peopleShouldBeCorrect(){
+        Person[] actual = Util.retrievePeople();
+        Person[] p = new Person[6];
+        p[0] = new Person("toto@toto123.ch");
+        p[1] = new Person("tata@tata123.ch");
+        p[2] = new Person("titi@titi123.ch");
+        p[3] = new Person("tutu@tutu123.ch");
+        p[4] = new Person("tete@tete123.ch");
+        p[5] = new Person("tvtv@tvtv123.ch");
+
+        for(int i = 0; i < 6; ++i){
+            assertEquals(p[i].getAdress(), actual[i].getAdress());
+        }
+    }
+
 
     /*************************************************************
      *  SMTP Client
