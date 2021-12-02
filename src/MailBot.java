@@ -17,7 +17,7 @@ public class MailBot {
         int nbGroups = Util.retrieveNbGroup();
         int peoplePerGroups;
         String host = "localhost";
-        int port = 25000;
+        int port = Util.retrieveSmtpPort();
         //vérifie que le nombre de groupe n'est pas trop élevé
         if (victims.length < nbGroups) {
             throw new RuntimeException("pas assez de victims pour autant de groupes");

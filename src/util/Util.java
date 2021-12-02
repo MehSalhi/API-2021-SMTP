@@ -45,7 +45,6 @@ public class Util {
             //Récupère le nombre de groupe
             while(reader.ready()){
                 if(cnt == 3){
-                    //TODO: faire plus évolutif
                     nbGroups = Integer.parseInt(reader.readLine().substring(15));
                     break;
                 }else{
@@ -57,6 +56,29 @@ public class Util {
             //TODO: Catch exception
         }
         return nbGroups;
+    }
+
+    public static int retrieveSmtpPort(){
+        BufferedReader reader;
+        int cnt = 1;
+        int port = 0;
+        try{
+            reader =new BufferedReader(
+                    new FileReader("./src/config/properties.properties", StandardCharsets.UTF_8));
+            //Récupère le nombre de groupe
+            while(reader.ready()){
+                if(cnt == 2){
+                    port = Integer.parseInt(reader.readLine().substring(15));
+                    break;
+                }else{
+                    reader.readLine();
+                }
+                ++cnt;
+            }
+        }catch(Exception e){
+            //TODO: Catch exception
+        }
+        return port;
     }
 
     public static Person[] retrievePeople(){
