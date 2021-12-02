@@ -68,7 +68,7 @@ public class Util {
             //Récupère le nombre de groupe
             while(reader.ready()){
                 if(cnt == 1){
-                    hostname.append(reader.readLine().substring(15));
+                    hostname.append(reader.readLine().substring(18));
                     break;
                 }else{
                     reader.readLine();
