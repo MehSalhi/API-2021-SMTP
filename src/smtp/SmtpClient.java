@@ -29,7 +29,7 @@ public class SmtpClient {
     public SmtpClient(String host, int port) {
         this.host = host;
         this.port = port;
-        LOGGER.setLevel(Level.INFO);
+        LOGGER.setLevel(Level.SEVERE);
     }
 
     private void throwExceptionIfAnswerIsNot(String expected) {
