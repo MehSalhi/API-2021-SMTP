@@ -16,7 +16,7 @@ public class MailBot {
         //récupère le nombre de groupes
         int nbGroups = Util.retrieveNbGroup();
         int peoplePerGroups;
-        String host = "localhost";
+        String host = Util.retrieveSmtpHostname();
         int port = Util.retrieveSmtpPort();
         //vérifie que le nombre de groupe n'est pas trop élevé
         if (victims.length < nbGroups) {

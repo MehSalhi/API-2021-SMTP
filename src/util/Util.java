@@ -58,6 +58,29 @@ public class Util {
         return nbGroups;
     }
 
+    public static String retrieveSmtpHostname(){
+        BufferedReader reader;
+        int cnt = 1;
+        StringBuilder hostname = new StringBuilder();
+        try{
+            reader =new BufferedReader(
+                    new FileReader("./src/config/properties.properties", StandardCharsets.UTF_8));
+            //Récupère le nombre de groupe
+            while(reader.ready()){
+                if(cnt == 1){
+                    hostname.append(reader.readLine().substring(15));
+                    break;
+                }else{
+                    reader.readLine();
+                }
+                ++cnt;
+            }
+        }catch(Exception e){
+            //TODO: Catch exception
+        }
+        return hostname.toString();
+    }
+
     public static int retrieveSmtpPort(){
         BufferedReader reader;
         int cnt = 1;
