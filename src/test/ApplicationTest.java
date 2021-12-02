@@ -228,8 +228,11 @@ public class ApplicationTest {
         Person s = new Person("toto@toto.ch");
         Person p1 = new Person("tata@tata.ch");
         Person p2 = new Person("titi@tata.ch");
+        Person p3 = new Person("tutu@tata.ch");
 
-        Message m = new Message(s, "test subject", "body content", p1, p2);
+        Person[] pT = new Person[]{p1, p2, p3};
+
+        Message m = new Message(s, "test subject", "body content", pT);
 
         SmtpClient client = new SmtpClient("localhost", 25000);
         assertTrue(client.sendMail(m));

@@ -76,7 +76,7 @@ public class PrankGenerator {
             reader.mark(1024);
 
             while(reader.ready()){
-                if(reader.readLine() == SEPARATOR){
+                if(reader.readLine().equals(SEPARATOR)){
                     ++nbPrank;
                 }
             }
@@ -102,7 +102,7 @@ public class PrankGenerator {
     private String selectOnePrank(BufferedReader reader, int numPrank){
         StringBuilder sb = new StringBuilder();
         String tmp;
-        int nbPrank = 1;
+        int nbPrank = 0;
         try{
 
             while(reader.ready()){

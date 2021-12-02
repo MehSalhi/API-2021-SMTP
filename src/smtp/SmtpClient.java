@@ -29,7 +29,7 @@ public class SmtpClient {
     public SmtpClient(String host, int port) {
         this.host = host;
         this.port = port;
-        LOGGER.setLevel(Level.SEVERE);
+        LOGGER.setLevel(Level.INFO);
     }
 
     private void throwExceptionIfAnswerIsNot(String expected) {
@@ -133,6 +133,23 @@ public class SmtpClient {
             os.println(clientMsg);
             os.flush();
 
+
+            clientMsg = "To: ";
+            for(int i = 0; i < m.getReceivers().length; ++i) {
+                if(i != 0) {
+                    clientMsg += ", ";
+                }
+                clientMsg += m.getReceivers()[i];
+                //System.out.println(clientMsg);
+
+            }
+            clientMsg += "\r";
+            LOGGER.log(Level.INFO, "Sending: " + clientMsg);
+            os.println(clientMsg);
+            os.flush();
+            //System.out.println("Receiving:");
+            //System.out.println(inBuffer);
+
             clientMsg = "Subject: " + m.getSubject();
             //System.out.println(clientMsg);
             LOGGER.log(Level.INFO, "Sending: " + clientMsg);
@@ -165,7 +182,7 @@ public class SmtpClient {
             // termine avec CRLF . CRLF
             // attend "250 OK"
             // envoie QUIT
-            clientMsg = "quit \r";
+            clientMsg = "QUIT \r";
             //System.out.println(clientMsg);
             os.println(clientMsg);
             os.flush();
