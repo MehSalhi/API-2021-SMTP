@@ -199,13 +199,13 @@ public class SmtpClient {
 
 
         } catch (Exception e) {
-
+            System.out.println(e);
         } finally {
             //os.close();
             try {
                 is.close();
             } catch (Exception e) {
-
+                System.out.println(e);
             }
 
         }

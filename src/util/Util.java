@@ -36,7 +36,7 @@ public class Util {
     }
 
     public static int retrieveNbGroup(){
-        BufferedReader reader;
+        BufferedReader reader = null;
         int cnt = 1;
         int nbGroups = 0;
         try{
@@ -53,13 +53,19 @@ public class Util {
                 ++cnt;
             }
         }catch(Exception e){
-            //TODO: Catch exception
+            throw new RuntimeException("La récupération du nombre de groupe a échoué");
+        }finally {
+            try{
+                reader.close();
+            }catch(Exception e){
+                System.out.println(e);
+            }
         }
         return nbGroups;
     }
 
     public static String retrieveSmtpHostname(){
-        BufferedReader reader;
+        BufferedReader reader = null;
         int cnt = 1;
         StringBuilder hostname = new StringBuilder();
         try{
@@ -76,13 +82,19 @@ public class Util {
                 ++cnt;
             }
         }catch(Exception e){
-            //TODO: Catch exception
+            throw new RuntimeException("La récupération du hostname a échoué");
+        }finally {
+            try{
+                reader.close();
+            }catch(Exception e){
+                System.out.println(e);
+            }
         }
         return hostname.toString();
     }
 
     public static int retrieveSmtpPort(){
-        BufferedReader reader;
+        BufferedReader reader = null;
         int cnt = 1;
         int port = 0;
         try{
@@ -99,13 +111,19 @@ public class Util {
                 ++cnt;
             }
         }catch(Exception e){
-            //TODO: Catch exception
+            throw new RuntimeException("La récupération du port à échoué");
+        }finally {
+            try{
+                reader.close();
+            }catch(Exception e){
+                System.out.println(e);
+            }
         }
         return port;
     }
 
     public static Person[] retrievePeople(){
-        BufferedReader reader;
+        BufferedReader reader = null;
         Person[] victims;
         int cnt = 0;
         try{
@@ -126,12 +144,16 @@ public class Util {
                 ++cnt;
             }
 
-            reader.close();
             return victims;
         }catch(Exception e){
-            //TODO: catch exceptions
-            return null;    //TODO: A VERIFIER
-        }
 
+            throw new RuntimeException("La récupération des victimes a échoué");
+        }finally {
+            try{
+                reader.close();
+            }catch(Exception e){
+                System.out.println(e);
+            }
+        }
     }
 }

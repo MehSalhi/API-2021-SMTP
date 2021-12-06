@@ -56,10 +56,9 @@ public class PrankGenerator {
     public void generatePrank(){
         File file;
         FileReader fr;
-        BufferedReader reader;
+        BufferedReader reader = null;
         int nbPrank = 0;
         try {
-            //TODO: chemin relatif
             if(test){
                 //permet de visualiser le chemin absolu du répertoir courrant pour le debug
                 Path currentRelativePath = Paths.get("");
@@ -91,12 +90,15 @@ public class PrankGenerator {
                 prank = new Prank(selectOnePrank(reader, selectRandom(nbPrank)));
             }
 
-
-            reader.close();
         }catch(Exception e){
-            //TODO: catch exceptions
+            throw new RuntimeException("La génération du prank a échoué");
+        }finally {
+            try {
+                reader.close();
+            }catch(Exception e){
+                System.out.println(e);
+            }
         }
-
     }
 
     private String selectOnePrank(BufferedReader reader, int numPrank){
@@ -117,7 +119,7 @@ public class PrankGenerator {
                 }
             }
         }catch(Exception e){
-            //TODO: catch exception
+            throw new RuntimeException("La séléction d'un prank a échoué");
         }
 
         return sb.toString();
