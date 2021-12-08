@@ -36,10 +36,38 @@ respecter le format suivant:
 - seconde ligne:
   - **smtpServerPort=** suivit du port du serveur (sans espace après le "=")
 - troisième ligne:
-  - **numberOfGroups=** suivit du nombre de groupe souhaité (sans espace après le "=")
+  - **numberOfGroups=** suivit du nombre de groupes souhaité (sans espace 
+  - après le "=")
+  
+*remarque: le nombre de groupe doit être tel que 3 adresse peuvent être
+attribuée par groupe, sinon le programme ne fonctionnera pas*
 
-*remarque: le nombre de groupe doit être tel que 3 adresse peuvent être 
-            attribuée par groupe, sinon le programme ne fonctionnera pas*
+#### Serveur test & Docker
+Nous avons mis a disposition un Dockerfile afin de créer une image docker 
+avec un serveur test. Cela permet de deployer rapidement un serveur pour 
+tester des campagnes de pranks.
+
+Dans le dossier docker, en ligne de commande, executer la commande :
+```
+docker build -t mockmock .
+```
+Cette commande va télécharger le serveur MockMock depuis git et construire 
+un conteneur Docker. Il faut ensuite lancer l'image Docker avec la commande 
+suivante :
+```
+docker run -p 25000:25000 -p 8282:8282 -it mockmock
+```
+Cela permet de lancer le serveur de test dans le conteneur Docker en mappant 
+les ports internes du conteneur vers l'extérieur afin de les rendre 
+accessible. Une fois fait, le serveur MockMock est accessible depuis un 
+navigateur web à l'adresse :
+```
+localhost:8282
+```
+
+
+
+
 ## Implementation
 Notre programme principal se trouve dans la classe MailBot. Cette classe
 se charge de récupérer les paramètres du fichiers properties.properties
