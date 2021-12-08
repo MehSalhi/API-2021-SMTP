@@ -71,7 +71,8 @@ public class Util {
         StringBuilder hostname = new StringBuilder();
         try{
             reader =new BufferedReader(
-                    new FileReader("./src/config/properties.properties", StandardCharsets.UTF_8));
+                    new FileReader("./src/main/java/config/properties" +
+                            ".properties", StandardCharsets.UTF_8));
             //Récupère le nombre de groupe
             while(reader.ready()){
                 if(cnt == 1){
@@ -100,7 +101,8 @@ public class Util {
         int port = 0;
         try{
             reader =new BufferedReader(
-                    new FileReader("./src/config/properties.properties", StandardCharsets.UTF_8));
+                    new FileReader("./src/main/java/config/properties" +
+                            ".properties", StandardCharsets.UTF_8));
             //Récupère le nombre de groupe
             while(reader.ready()){
                 if(cnt == 2){
