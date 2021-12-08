@@ -47,7 +47,7 @@ public class ApplicationTest {
         Message m = new Message(s, "test subject", "body content", p1, p2);
         String expectedBody = "body content";
         String expectedSubject = "test subject";
-        String expectedSender = s.getAdress();
+        String expectedSender = s.getAddress();
         String expectedReceivers = "tata@tata.ch, titi@tata.ch";
         assertEquals(expectedBody, m.getBody());
         assertEquals(expectedSubject, m.getSubject());
@@ -134,7 +134,7 @@ public class ApplicationTest {
 
         Group g = new Group(p1, p2, p3);
         assertNotNull(g.getSender());
-        assertTrue(g.getReceivers().length == 2);
+        assertEquals(2, g.getReceivers().length);
     }
 
     /*************************************************************
@@ -212,7 +212,7 @@ public class ApplicationTest {
         p[5] = new Person("tvtv@tvtv123.ch");
 
         for(int i = 0; i < 6; ++i){
-            assertEquals(p[i].getAdress(), actual[i].getAdress());
+            assertEquals(p[i].getAddress(), actual[i].getAddress());
         }
     }
 

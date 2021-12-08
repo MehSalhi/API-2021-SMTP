@@ -1,24 +1,24 @@
 package model.mail;
 
 public class Message {
-    private String body;
-    private String subject;
-    private String sender;
-    private String[] receivers;
+    private final String body;
+    private final String subject;
+    private final String sender;
+    private final String[] receivers;
 
     public Message(Person sender, String subject, String body, Person ... receivers) {
         this.body = body;
         this.subject = subject;
-        this.sender = sender.getAdress();
+        this.sender = sender.getAddress();
         this.receivers = personArrayToStringArray(receivers);
     }
 
     /**
      * Converts an array of string to a string
      * Used to format the receiver list from a list of argument to a String
-     * "email1, email2, emai3"
-     * @param stringArray
-     * @return
+     * "email1, email2, email3"
+     * @param stringArray Tableau de personnes
+     * @return Un tableau de String
      */
     public String[] personArrayToStringArray(Person ... stringArray) {
         String[] personStrArray = new String[stringArray.length];
@@ -28,7 +28,7 @@ public class Message {
         }
 
         for(int i = 0; i < stringArray.length; ++i) {
-            personStrArray[i] = stringArray[i].getAdress();
+            personStrArray[i] = stringArray[i].getAddress();
         }
 
         return personStrArray;

@@ -10,17 +10,17 @@ import java.nio.file.Paths;
 import java.util.Random;
 
 public class PrankGenerator {
-    private Group group;
+    private final Group group;
     private Prank prank;
     final String SEPARATOR = "<==========>";
     private Message message;
-    private boolean test;
+    private final boolean test;
 
     /**
      * This constructor is used only for test purposes and allows to
      * launch each functions separately
-     * @param victims
-     * @param test
+     * @param victims Le groupe
+     * @param test Utilisé pour tester le PrankGenerator
      */
     public PrankGenerator(Group victims, boolean test){
         this.group = victims;
@@ -44,8 +44,7 @@ public class PrankGenerator {
 
     public Message generateMessage(){
         generatePrank();
-        Message message = new Message(group.getSender(), prank.getSubject(), prank.getBody(), group.getReceivers());
-        return message;
+        return new Message(group.getSender(), prank.getSubject(), prank.getBody(), group.getReceivers());
     }
 
     private int selectRandom(int size){
@@ -60,7 +59,7 @@ public class PrankGenerator {
         int nbPrank = 0;
         try {
             if(test){
-                //permet de visualiser le chemin absolu du répertoir courrant pour le debug
+                //permet de visualiser le chemin absolu du repertoire courant pour le debug
                 Path currentRelativePath = Paths.get("");
                 String s = currentRelativePath.toAbsolutePath().toString();
                 System.out.println("Current absolute path is: " + s);
@@ -83,7 +82,7 @@ public class PrankGenerator {
             reader.reset();
 
             if(test){
-                //séléctionne un prank fix si il s'agit d'un test
+                //sélectionne un prank fix s'il s'agit d'un test
 
                 prank = new Prank(selectOnePrank(reader, 1));
             }else{
@@ -96,7 +95,7 @@ public class PrankGenerator {
             try {
                 reader.close();
             }catch(Exception e){
-                System.out.println(e);
+                System.out.println("Erreur fermeture des streams");
             }
         }
     }
@@ -119,7 +118,7 @@ public class PrankGenerator {
                 }
             }
         }catch(Exception e){
-            throw new RuntimeException("La séléction d'un prank a échoué");
+            throw new RuntimeException("La selection d'un prank a échoué");
         }
 
         return sb.toString();
