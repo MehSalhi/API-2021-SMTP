@@ -85,7 +85,7 @@ public class PrankGenerator {
             if(test){
                 //séléctionne un prank fix si il s'agit d'un test
 
-                prank = new Prank(selectOnePrank(reader, 2));
+                prank = new Prank(selectOnePrank(reader, 1));
             }else{
                 prank = new Prank(selectOnePrank(reader, selectRandom(nbPrank)));
             }
