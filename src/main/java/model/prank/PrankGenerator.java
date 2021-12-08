@@ -65,9 +65,9 @@ public class PrankGenerator {
                 String s = currentRelativePath.toAbsolutePath().toString();
                 System.out.println("Current absolute path is: " + s);
                 //Si on effectue un test
-                file = new File("./src/test/message.UTF8");
+                file = new File("./src/test/java/config/message.UTF8");
             }else{
-                file = new File("./src/config/message.UTF8");
+                file = new File("./src/main/java/config/message.UTF8");
             }
 
             fr = new FileReader(file, StandardCharsets.UTF_8);

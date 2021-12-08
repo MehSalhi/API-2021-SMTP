@@ -197,7 +197,7 @@ public class ApplicationTest {
      *************************************************************/
     @Test
     public void nbGroupShouldBeCorrect(){
-        assertEquals(8, Util.retrieveNbGroup());
+        assertEquals(2, Util.retrieveNbGroup());
     }
 
     @Test

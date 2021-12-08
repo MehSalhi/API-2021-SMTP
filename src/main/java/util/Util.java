@@ -41,7 +41,8 @@ public class Util {
         int nbGroups = 0;
         try{
             reader =new BufferedReader(
-                    new FileReader("./src/config/properties.properties", StandardCharsets.UTF_8));
+                    new FileReader("./src/main/java/config/properties" +
+                            ".properties", StandardCharsets.UTF_8));
             //Récupère le nombre de groupe
             while(reader.ready()){
                 if(cnt == 3){
@@ -128,7 +129,8 @@ public class Util {
         int cnt = 0;
         try{
             reader =new BufferedReader(
-                    new FileReader("./src/config/victims.UTF8", StandardCharsets.UTF_8));
+                    new FileReader("./src/main/java/config/victims.UTF8",
+                            StandardCharsets.UTF_8));
             reader.mark(1024);
             //compte le nombre de personnes
             while(reader.ready()){
