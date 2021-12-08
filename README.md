@@ -9,6 +9,34 @@ TODO
 * **A description of your implementation**: document the key aspects of your code. It is probably a good idea to start with a class diagram. Decide which classes you want to show (focus on the important ones) and describe their responsibilities in text. It is also certainly a good idea to include examples of dialogues between your client and an SMTP server (maybe you also want to include some screenshots here).
 
 ## Description
+Ce projet a pour but de récupérer des addresses mail dans une
+liste afin de créer des groupes et d'envoyer un mail forgé contenant
+un prank à chacun des groupes. L'expéditeur apparent du message est 
+sélectionné de manière aléatoire parmis les adresse d'un groupe.
+
 ## Setup Instructions
 ## Configuration and use instructions
+#### Adresses mail
+les addresses mail à utiliser doivent être écrites dans le fichier 
+victims.UTF8 (./src/config/victims.UTF8). Une seule adresse ne doit 
+être indiquée par ligne.
+#### Prank
+Les pranks doivent être écrit dans le fichier message.UTF8
+(./src/config/message.UTF8). Chaque prank est séparé par le séparateur 
+**<==========>**. Dans chaque prank, la première ligne est le sujet du
+prank tandis que le reste est le corp du prank.
+#### Configuration
+le fichier properties.properties (./src/config/properties.properties)
+contient les indication sur le serveur et sur le nombre de groupe voulu.
+Pour assurer le bon fonctionnement du programme, il est impératif de 
+respecter le format suivant:
+- première ligne:
+  - **smtpServerAdresse=** suivit de l'adresse du serveur (sans espace après le "=")
+- seconde ligne:
+  - **smtpServerPort=** suivit du port du serveur (sans espace après le "=")
+- troisième ligne:
+  - **numberOfGroups=** suivit du nombre de groupe souhaité (sans espace après le "=")
+
+*remarque: le nombre de groupe doit être tel que 3 adresse peuvent être 
+            attribuée par groupe, sinon le programme ne fonctionnera pas*
 ## Implementation
