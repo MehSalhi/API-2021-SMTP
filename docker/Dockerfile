@@ -10,10 +10,12 @@ RUN apk add maven
 RUN apk add git
 RUN mkdir /MockMock
 RUN git clone https://github.com/HEIGVD-Course-API/MockMock.git /MockMock
+WORKDIR MockMock
+RUN git checkout 69698c1b9241e27e8f52ea3e3624c31cb5ebbbba
+WORKDIR /
 
 #Build
 RUN mvn -f /MockMock clean package install
-# checkout
 
 # Build release image
 FROM alpine:latest AS app
@@ -29,7 +31,3 @@ EXPOSE 8282
 
 #Define how to start
 ENTRYPOINT ["java", "-jar", "MockMock-1.4.0.one-jar.jar", "-p",  "25000"]
-#CMD ["java", "-jar", "-p 25000", "MockMock-1.4.0.one-jar.jar"]
-
-
-
