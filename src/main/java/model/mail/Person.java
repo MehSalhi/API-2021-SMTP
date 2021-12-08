@@ -25,7 +25,6 @@ public class Person {
     // the web and some didn't work as expected. This one seems to work.
     // Source: https://www.geeksforgeeks.org/check-email-address-valid-not-java/
     public static boolean isValidEmail(String email) {
-        //String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
         String regex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
