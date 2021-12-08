@@ -27,7 +27,7 @@ public class SmtpClient {
     public SmtpClient(String host, int port) {
         this.host = host;
         this.port = port;
-        LOGGER.setLevel(Level.SEVERE);
+        LOGGER.setLevel(Level.INFO);
     }
 
     private void throwExceptionIfAnswerIsNot(String expected) {
@@ -83,6 +83,8 @@ public class SmtpClient {
             LOGGER.log(Level.INFO, "Sending: " + clientMsg);
             os.println(clientMsg);
             os.flush();
+
+
 
             //System.out.println("Receiving:");
             inBuffer.reset();
@@ -148,7 +150,8 @@ public class SmtpClient {
             //System.out.println("Receiving:");
             //System.out.println(inBuffer);
 
-            clientMsg = "Subject: " + m.getSubject();
+            clientMsg = "Subject: " + m.getSubject() + "\r";
+            clientMsg += "Content-Type: text/plain; charset=utf-8\r";
             //System.out.println(clientMsg);
             LOGGER.log(Level.INFO, "Sending: " + clientMsg);
             os.println(clientMsg);
