@@ -15,6 +15,7 @@ un prank à chacun des groupes. L'expéditeur apparent du message est
 sélectionné de manière aléatoire parmis les adresse d'un groupe.
 
 ## Setup Instructions
+
 ## Configuration and use instructions
 #### Adresses mail
 les addresses mail à utiliser doivent être écrites dans le fichier 
@@ -40,3 +41,31 @@ respecter le format suivant:
 *remarque: le nombre de groupe doit être tel que 3 adresse peuvent être 
             attribuée par groupe, sinon le programme ne fonctionnera pas*
 ## Implementation
+Notre programme principal se trouve dans la classe MailBot. Cette classe
+se charge de récupérer les paramètres du fichiers properties.properties
+grâce aux méthodes contenues dans la classe Util. Elle crée ensuite les
+différents groupes en leur passant en paramètres un nombre variable de 
+Person grâce à une méthode qui est également contenue dans la 
+classe Util. La classe groupe se charge de séléctionner un expéditeur parmis
+les Person passées en paramètre.Ensuite, MailBot crée un message par groupe grâce à une instance de la 
+classe PrankGenerator.
+
+PrankGenerator crée tout d'abord un Prank en lui passant en paramètre l'un 
+des pranks contenus dans le fichier message.UTF8 et séléctionné de manière
+aléatoire. La classe prank se charge de découper le prank en un sujet et
+un corps. Ensuite, PrankGenerator crée un Message en lui passant en paramètre
+l'expéditeur du groupe, les victimes du groupe, le sujet du prank et son corps.
+
+La classe message se charge de formater les différents éléments qui lui sont 
+passés en paramètre de manière à avoir un message composé de chaînes de caractères
+utilisable (body, subject, sender et receivers).
+
+Mailbot transmet ensuite le message ainsi généré par PrankGenerator à une
+instance de la Classe SmtpClient.
+
+Ce sera finalement cette classe SmtpClient qui se chargera d'ouvrir une connexion
+avec le serveur, puis de lui communiquer le message au format SMTP avant de clore
+la connexion.
+
+Un nouveau message et une nouvelle connexion SMTP est générée pour chacun
+des groupes qui auront été créés plus tôt.
