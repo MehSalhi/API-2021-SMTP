@@ -34,10 +34,18 @@ public class Message {
         return personStrArray;
     }
 
+    /**
+     * Gets the receivers
+     * @return The receivers
+     */
     public String[] getReceivers() {
         return receivers;
     }
 
+    /**
+     * Gets the receivers and concatenates them into a string
+     * @return A string containing all the receivers separated by ", "
+     */
     public String getReceiversToString() {
         StringBuilder strB = new StringBuilder();
         for(int i = 0; i < getReceivers().length; ++i) {
@@ -49,18 +57,34 @@ public class Message {
         return strB.toString();
     }
 
+    /**
+     * Get the body
+     * @return The Body of the message
+     */
     public String getBody() {
         return body;
     }
 
+    /**
+     * Get the subject
+     * @return The subject of the message
+     */
     public String getSubject() {
         return subject;
     }
 
+    /**
+     * Get the sender
+     * @return The sender of the message
+     */
     public String getSender() {
         return sender;
     }
 
+    /**
+     * Converts a message into a String to print it out
+     * @return The message converted into a String
+     */
     public String toString() {
         StringBuilder strB = new StringBuilder();
         strB.append("Sender: ");
@@ -86,6 +110,4 @@ public class Message {
 
         return strB.toString();
     }
-
-
 }
