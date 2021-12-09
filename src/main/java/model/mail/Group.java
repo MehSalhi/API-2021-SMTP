@@ -1,3 +1,10 @@
+/**
+ * API-SMTP
+ * 09.12.2021
+ *
+ * @author Guilain Mbayo
+ * @author Mehdi Salhi
+ */
 package model.mail;
 
 import java.util.Random;
@@ -25,15 +32,28 @@ public class Group {
 
     }
 
+    /**
+     * Select a sender among all the victims
+     * @param size number of victims
+     * @return The index of the sender
+     */
     private int selectSender(int size) {
         Random rand = new Random();
         return rand.nextInt(size);
     }
 
+    /**
+     * Gets the receivers
+     * @return The receivers
+     */
     public Person[] getReceivers() {
         return receivers;
     }
 
+    /**
+     * Gets the sender
+     * @return The sender
+     */
     public Person getSender() {
         return sender;
     }

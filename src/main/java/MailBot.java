@@ -1,3 +1,9 @@
+/**
+ * API-SMTP
+ * 09.12.2021
+ * @author Guilain Mbayo
+ * @author Mehdi Salhi
+ */
 import model.mail.*;
 import model.prank.*;
 import smtp.*;
@@ -5,6 +11,12 @@ import util.*;
 
 public class MailBot {
 
+    /**
+     * Main application that will retrieve the email campaign's information
+     * from the configuration files, create groups and prank and then send
+     * the email via our SMTP client.
+     * @param args Application arguments
+     */
     public static void main(String[] args) {
         //récupère toutes les personnes
         Person[] victims = Util.retrievePeople();

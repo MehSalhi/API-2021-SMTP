@@ -1,3 +1,9 @@
+/**
+ * API-SMTP
+ * 09.12.2021
+ * @author Guilain Mbayo
+ * @author Mehdi Salhi
+ */
 package smtp;
 
 import model.mail.Message;
@@ -25,6 +31,16 @@ public class SmtpClient {
         LOGGER.setLevel(Level.INFO);
     }
 
+    /**
+     * Simple error handling function
+     * Throw an exception if the answer from the server doesn't match the
+     * expected String. Since the communication with the SMTP server is
+     * straightforward, we expected to
+     * receive something like "250 Ok" each time we sent something to the
+     * server.
+     *
+     * @param expected The expected answer from the server
+     */
     private void throwExceptionIfAnswerIsNot(String expected) {
         if (!inBuffer.toString().startsWith(expected)) {
             throw new RuntimeException("Error while communicating with " +

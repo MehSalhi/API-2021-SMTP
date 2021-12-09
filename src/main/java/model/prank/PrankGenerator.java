@@ -1,4 +1,11 @@
+/**
+ * API-SMTP
+ * 09.12.2021
+ * @author Guilain Mbayo
+ * @author Mehdi Salhi
+ */
 package model.prank;
+
 import model.mail.*;
 
 import java.io.BufferedReader;
@@ -19,15 +26,16 @@ public class PrankGenerator {
     /**
      * This constructor is used only for test purposes and allows to
      * launch each functions separately
+     *
      * @param victims Le groupe
-     * @param test Utilisé pour tester le PrankGenerator
+     * @param test    Utilisé pour tester le PrankGenerator
      */
-    public PrankGenerator(Group victims, boolean test){
+    public PrankGenerator(Group victims, boolean test) {
         this.group = victims;
         this.test = test;
     }
 
-    public PrankGenerator(Group victims){
+    public PrankGenerator(Group victims) {
         this.group = victims;
         message = generateMessage();
         this.test = false;
@@ -42,30 +50,30 @@ public class PrankGenerator {
         return message;
     }
 
-    public Message generateMessage(){
+    public Message generateMessage() {
         generatePrank();
         return new Message(group.getSender(), prank.getSubject(), prank.getBody(), group.getReceivers());
     }
 
-    private int selectRandom(int size){
+    private int selectRandom(int size) {
         Random rand = new Random();
         return rand.nextInt(size);
     }
 
-    public void generatePrank(){
+    public void generatePrank() {
         File file;
         FileReader fr;
         BufferedReader reader = null;
         int nbPrank = 0;
         try {
-            if(test){
+            if (test) {
                 //permet de visualiser le chemin absolu du repertoire courant pour le debug
                 Path currentRelativePath = Paths.get("");
                 String s = currentRelativePath.toAbsolutePath().toString();
                 System.out.println("Current absolute path is: " + s);
                 //Si on effectue un test
                 file = new File("./src/test/java/config/message.UTF8");
-            }else{
+            } else {
                 file = new File("./src/main/java/config/message.UTF8");
             }
 
@@ -73,51 +81,51 @@ public class PrankGenerator {
             reader = new BufferedReader(fr);
             reader.mark(1024);
 
-            while(reader.ready()){
-                if(reader.readLine().equals(SEPARATOR)){
+            while (reader.ready()) {
+                if (reader.readLine().equals(SEPARATOR)) {
                     ++nbPrank;
                 }
             }
 
             reader.reset();
 
-            if(test){
+            if (test) {
                 //sélectionne un prank fix s'il s'agit d'un test
 
                 prank = new Prank(selectOnePrank(reader, 1));
-            }else{
+            } else {
                 prank = new Prank(selectOnePrank(reader, selectRandom(nbPrank)));
             }
 
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("La génération du prank a échoué");
-        }finally {
+        } finally {
             try {
                 reader.close();
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("Erreur fermeture des streams");
             }
         }
     }
 
-    private String selectOnePrank(BufferedReader reader, int numPrank){
+    private String selectOnePrank(BufferedReader reader, int numPrank) {
         StringBuilder sb = new StringBuilder();
         String tmp;
         int nbPrank = 0;
-        try{
+        try {
 
-            while(reader.ready()){
+            while (reader.ready()) {
                 tmp = reader.readLine();
-                if(SEPARATOR.equals(tmp)){
+                if (SEPARATOR.equals(tmp)) {
                     ++nbPrank;
-                }else if(nbPrank == numPrank){
+                } else if (nbPrank == numPrank) {
                     sb.append(tmp);
                     sb.append("\n");
-                }else if(nbPrank > numPrank){
+                } else if (nbPrank > numPrank) {
                     return sb.toString();
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("La selection d'un prank a échoué");
         }
 

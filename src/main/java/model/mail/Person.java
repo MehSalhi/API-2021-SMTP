@@ -1,3 +1,9 @@
+/**
+ * API-SMTP
+ * 09.12.2021
+ * @author Guilain Mbayo
+ * @author Mehdi Salhi
+ */
 package model.mail;
 
 public class Person {
@@ -15,15 +21,27 @@ public class Person {
         }
     }
 
+    /**
+     * Gets the address of a Person
+     *
+     * @return The address
+     */
     public String getAddress() {
         return address;
     }
 
-    // This is a simple regex email address format validator taken from the
-    // web. This is enough for our purpose but for production code this
-    // should be tested further. We ran a few test with a few solutions from
-    // the web and some didn't work as expected. This one seems to work.
-    // Source: https://www.geeksforgeeks.org/check-email-address-valid-not-java/
+
+    /**
+     * Validates an email format with a regex expression
+     * This is a simple regex email address format validator taken from the
+     * web. This is enough for our purpose but for production code this
+     * should be tested further. We ran a few test with a few solutions from
+     * the web and some didn't work as expected. This one seems to work.
+     * Source: https://www.geeksforgeeks.org/check-email-address-valid-not-java/
+     *
+     * @param email The email address to validate
+     * @return true if the email is correctly formatted
+     */
     public static boolean isValidEmail(String email) {
         String regex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
                 "[a-zA-Z0-9_+&*-]+)*@" +
