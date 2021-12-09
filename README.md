@@ -110,7 +110,7 @@ docker ps
 docker kill "container name"
 
 Notes: 
-1) il se peut qu'il fasse ajouter "sudo" devant les commandes
+1) il se peut qu'il faille ajouter "sudo" devant les commandes
 2) Si la connexion avec le serveur ne fonctionne pas, vérifier la 
 configuration de votre firewall
 3) Rajouter & à la fin de la commande docker build... afin de récupérer le 
