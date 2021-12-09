@@ -17,9 +17,13 @@ utilitaires statiques sans lien en particulier à l'une ou l'autre classe.
 ![](figures/uml-diagram.png)
 
 ## Setup Instructions
+Dépendances :
+- Docker
+- Git
+- Java
 
 ### Serveur test & Docker
-Nous avons mis a disposition un Dockerfile afin de créer une image docker
+Nous avons mis à disposition un Dockerfile afin de créer une image docker
 avec un serveur test. Nous utilisons l'application MockMock pour créer un 
 serveur de test qui reçoit les e-mails. Cela permet de deployer rapidement 
 un serveur pour tester des campagnes de pranks.
