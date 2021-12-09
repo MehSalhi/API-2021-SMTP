@@ -80,6 +80,45 @@ respecter le format suivant :
 *remarque : le nombre de groupes doit être tel que 3 adresse peuvent être
 attribuée par groupe, sinon le programme ne fonctionnera pas*
 
+#### Exemple setup & utilisation typique
+
+```
+// Build & execution du serveur de test
+// Depuis le répertoire souhaité:
+git clone https://github.com/MehSalhi/API-2021-SMTP
+cd API-2021-SMTP/
+cd docker
+docker build -t mockmock .
+docker run -p 25000:25000 -p 8282:8282 -it mockmock
+// Depuis un navigateur web se rendre à l'adresse
+localhost:8282
+
+Client
+1) Modifier les fichiers de configurations 
+dans le répertoire API-2021-SMTP/src/main/java/config
+  - message.UTF8 : contient les canulars qui seront envoyés
+  - properties.properties : contient les propriétés générales
+  - victims.UTF8 : contient les adresses e-mails des victimes
+2) Executer la classe principale Mailbot qui se trouve dans src/main/java/
+
+Pour terminer le serveur SMTP
+Faire CTRL+C dans le terminal ou le serveur est lancé s'il est toujours 
+attaché au terminal, sinon:
+
+// Récupérer le nom du container docker en cours d'execution
+docker ps
+docker kill "container name"
+
+Notes: 
+1) il se peut qu'il fasse ajouter "sudo" devant les commandes
+2) Si la connexion avec le serveur ne fonctionne pas, vérifier la 
+configuration de votre firewall
+3) Rajouter & à la fin de la commande docker build... afin de récupérer le 
+contrôle du terminal pendant que le serveur s'execute en fond
+
+```
+
+
 ## Implementation
 Notre programme principal se trouve dans la classe MailBot. Cette classe
 se charge de récupérer les paramètres du fichier properties.properties
